@@ -8,30 +8,186 @@ body {
     background-color: black;
 }
 
+#thumbBar {
+    display: grid;
+    grid-template-columns: 20px 1fr 20px;
+    grid-template-rows: 1fr;
+    height: 100px;
+    width: 320px;
+    max-width: 95%;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    position: fixed;
+    background-color: rgba(61, 59, 59, 0.7);
+    border-radius: 10%;
+}
+
 .thumbnails {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    background-color: #0e1111;
-    height: 120px;
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
+    overflow: hidden;    
 }
 
 .thumbnails img {
-    width: 160px;
-    height: 106px;
-    padding: 5px;
+    width: 110px;
+    height: 90px;
+    padding: 3px;
     border: 1px solid transparent;
 }
 
 #displayImage {
     width: 100vw;
-    object-fit: cover;
+    object-fit: contain;
     overflow: hidden;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#nextBtn {
+    position: absolute;
+    background-color: transparent;
+    border: 0;
+    right: 5vw;
+    top: 50vh;
+    max-width: 30px;
+    z-index: 10;
+}
+
+#prevBtn {
+    position: absolute;
+    background-color: transparent;
+    border: 0;
+    left: 5vw;
+    top: 50vh;
+    max-width: 30px;
+    z-index: 10;
+}
+
+#leftThumbBtn {
+    background-color: transparent;
+    border: 0;
+    max-width: 30px;
+    z-index: 1;
+    padding: 5px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+}
+
+#rightThumbBtn {
+    background-color: transparent;
+    border: 0;
+    max-width: 30px;
+    z-index: 1;
+    padding: 5px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+}
+
+#hideThumb {
+    position: absolute;
+    background-color: transparent;
+    border: 0;
+    bottom: 1vh;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 30px;
+    z-index: 10;
+}
+
+#viewAltBtn {
+    position:absolute;
+    left: 1vw;
+    top: 1vh;
+    background-color: white;
+    color: black;
+    font-size: 0.8rem;
+    padding: 5px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    text-wrap: wrap;
+    width: 40px;
+    border-radius: 4px;
+    border: 0;
+}
+
+.mainBtn img {
+    width: 20px;
+}
+
+.thumbBtn img {
+    width: 16px;
+}
+
+#hideThumb img {
+    height: 20px;
+}
+
+.mainBtn:focus, .thumbBtn:focus, #hideThumb:focus, #viewAltBtn:focus, .thumbnails img:focus {
+    outline: 2px solid fuchsia;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.flip {
+    transform: scaleY(-1);
+}
+
+#announcer {
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+    text-align: center;
+    width: 80%;
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+@media (min-width: 760px) {
+    #announcer {
+        background-color: rgb(0, 0, 0, 0.5);
+        font-size: 1.2rem;
+    }
+
+    #thumbBar {
+        width: 800px;
+        height: 120px;
+        grid-template-columns: 30px 1fr 30px;
+        background-color: rgb(0, 0, 0, 0.7);
+    }
+    .thumbnails img {
+        width: 160px;
+        height: 106px;
+        padding: 5px;
+    }
+    .thumbBtn img {
+        width: 20px;
+    }
+    .mainBtn img {
+        width: 30px;
+    }
+    #hideThumb img {
+        height: 30px;
+    }
+    #displayImage {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        overflow: hidden;
+    }
 }
