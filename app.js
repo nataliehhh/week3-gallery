@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function() {
 thumbnails.forEach(function (tn) {
     tn.addEventListener("click", function() {
         if (window.innerWidth > 760) {
-            largeImagePath = tn.getAttribute("data-large-src-large") || tn.getAttribute("data-large-src")
+            largeImagePath = tn.getAttribute("data-large-src-large") 
         } else {
-            largeImagePath = tn.getAttribute("data-large-src-small") || tn.getAttribute("data-large-src")
+            largeImagePath = tn.getAttribute("data-large-src-small") 
         } 
         displayImage.src = largeImagePath || tn.src;
         displayImage.alt = tn.alt; 
