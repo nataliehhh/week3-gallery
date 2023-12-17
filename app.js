@@ -12,24 +12,44 @@ const announcer = document.getElementById("announcer")
 const viewAltBtn = document.getElementById("viewAltBtn")
 let currentImage = 0
 let scrollingInterval = 0
+let largeImagePath
+
+document.addEventListener("DOMContentLoaded", function() {
+    announcer.textContent = `${displayImage.alt}.`
+})
 
 thumbnails.forEach(function (tn) {
     tn.addEventListener("click", function() {
-        displayImage.src = tn.src;
-        displayImage.alt = tn.alt;
-        displayImage.srcset = tn.srcset;
+        if (window.innerWidth > 760) {
+            largeImagePath = tn.getAttribute("data-large-src-large") || tn.getAttribute("data-large-src")
+        } else {
+            largeImagePath = tn.getAttribute("data-large-src-small") || tn.getAttribute("data-large-src")
+        } 
+        displayImage.src = largeImagePath || tn.src;
+        displayImage.alt = tn.alt; 
+        announcer.textContent = `${displayImage.alt}.`
     })
     tn.addEventListener("keydown", function(event) {
         if (event.key === " " || event.key === "Enter") {
-            displayImage.src = tn.src;
-            displayImage.alt = tn.alt;
-            displayImage.srcset = tn.srcset;
+        if (window.innerWidth > 760) {
+            largeImagePath = tn.getAttribute("data-large-src-large") || tn.getAttribute("data-large-src")
+        } else {
+            largeImagePath = tn.getAttribute("data-large-src-small") || tn.getAttribute("data-large-src")
+        }
+        displayImage.src = largeImagePath || tn.src;
+        displayImage.alt = tn.alt;
+        announcer.textContent = `${displayImage.alt}.`
     }})
     tn.addEventListener("touchend", function(event) {
         event.preventDefault()
-        displayImage.src = tn.src;
+        if (window.innerWidth > 760) {
+            largeImagePath = tn.getAttribute("data-large-src-large") || tn.getAttribute("data-large-src")
+        } else {
+            largeImagePath = tn.getAttribute("data-large-src-small") || tn.getAttribute("data-large-src")
+        }
+        displayImage.src = largeImagePath || tn.src;
         displayImage.alt = tn.alt;
-        displayImage.srcset = tn.srcset;
+        announcer.textContent = `${displayImage.alt}.`
     })})
 
 leftThumbBtn.addEventListener("click", function() {
@@ -85,9 +105,14 @@ function displayNextImage(i) {
     currentImage += i
     if (currentImage >= thumbnails.length) currentImage = 0
     if (currentImage < 0) currentImage = thumbnails.length - 1
-    displayImage.src = thumbnails[currentImage].src
+    
+    if (window.innerWidth > 760) {
+        largeImagePath = thumbnails[currentImage].getAttribute("data-large-src-large") || thumbnails[currentImage].getAttribute("data-large-src")
+    } else {
+        largeImagePath = thumbnails[currentImage].getAttribute("data-large-src-small") || thumbnails[currentImage].getAttribute("data-large-src")
+    }
+    displayImage.src = largeImagePath || thumbnails[currentImage].src
     displayImage.alt = thumbnails[currentImage].alt
-    displayImage.srcset = thumbnails[currentImage].srcset
     announcer.textContent = `${displayImage.alt}`
 }
 
@@ -140,7 +165,6 @@ thumbContainer.addEventListener("touchend", e=> {
     swipeThumbs()
 })
 
-
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowLeft") {
         displayNextImage(-1)
@@ -158,12 +182,6 @@ document.addEventListener("keydown", function(event) {
         hideThumbImg.classList.remove("flip")
     }
 })
-
-function setAltText() {
-    announcer.textContent = `${displayImage.alt}.`
-}
-
-setAltText()
 
 viewAltBtn.addEventListener("click", function() {
     announcer.classList.toggle("hidden")
