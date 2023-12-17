@@ -23,7 +23,7 @@ thumbnails.forEach(function (tn) {
         if (window.innerWidth > 760) {
             largeImagePath = tn.getAttribute("data-large-src-large") 
         } else {
-            largeImagePath = tn.getAttribute("data-large-src-small") 
+            largeImagePath = tn.getAttribute("data-large-src-small")
         } 
         displayImage.src = largeImagePath || tn.src;
         displayImage.alt = tn.alt; 
