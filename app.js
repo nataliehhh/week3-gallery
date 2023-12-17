@@ -25,13 +25,26 @@ thumbnails.forEach(function (tn) {
             displayImage.alt = tn.alt;
             displayImage.srcset = tn.srcset;
     }})
-})
+    tn.addEventListener("touchstart", function(event) {
+        event.preventDefault()
+        displayImage.src = tn.src;
+        displayImage.alt = tn.alt;
+        displayImage.srcset = tn.srcset;
+    })})
 
 leftThumbBtn.addEventListener("click", function() {
     thumbContainer.scrollLeft -= 100
 })
 
 rightThumbBtn.addEventListener("click", function() {
+    thumbContainer.scrollLeft += 100
+})
+
+leftThumbBtn.addEventListener("touchstart", function() {
+    thumbContainer.scrollLeft -= 100
+})
+
+rightThumbBtn.addEventListener("touchstart", function() {
     thumbContainer.scrollLeft += 100
 })
 
@@ -58,7 +71,12 @@ rightThumbBtn.addEventListener("mouseout", function() {
 hideThumb.addEventListener("click", function() {
     thumbBar.classList.toggle("hidden")
     hideThumbImg.classList.toggle("flip")
-    })
+})
+
+hideThumb.addEventListener("touchstart", function() {
+    thumbBar.classList.toggle("hidden")
+    hideThumbImg.classList.toggle("flip")
+})    
 
 function displayNextImage(i) {
     currentImage += i
@@ -77,6 +95,58 @@ nextBtn.addEventListener("click", function() {
 prevBtn.addEventListener("click", function() {
     displayNextImage(-1)
 })
+
+nextBtn.addEventListener("touchstart", function(event) {
+    event.preventDefault()
+    displayNextImage(1)
+})
+prevBtn.addEventListener("touchstart", function(event) {
+    event.preventDefault()
+    displayNextImage(-1)
+})
+
+let touchStartX = 0
+let touchEndX = 0
+const minSwipeDistance = 50
+
+function swipeImage() {
+    const swipeDistance = touchEndX - touchStartX
+    if (Math.abs(swipeDistance) >= minSwipeDistance) {
+        if (swipeDistance < 0) {
+            displayNextImage(-1)
+        } else if (swipeDistance > 0) {
+            displayNextImage(1)
+        }
+}}
+
+function swipeThumbs() {
+    const swipeDistance = touchEndX - touchStartX
+    if (Math.abs(swipeDistance) >= minSwipeDistance) {
+        if (swipeDistance < 0) {
+            thumbContainer.scrollLeft -= 70
+        } else if (swipeDistance > 0) {
+            thumbContainer.scrollLeft += 70
+        }
+}}
+
+displayImage.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX
+})
+
+displayImage.addEventListener("touchend", e=> {
+    touchEndX = e.changedTouches[0].screenX
+    swipeImage()
+})
+
+thumbContainer.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX
+})
+
+thumbContainer.addEventListener("touchend", e=> {
+    touchEndX = e.changedTouches[0].screenX
+    swipeThumbs()
+})
+
 
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowLeft") {
@@ -104,8 +174,18 @@ setAltText()
 
 viewAltBtn.addEventListener("click", function() {
     announcer.classList.toggle("hidden")
-    if (viewAltBtn.textContent = "View Text") {
+    if (viewAltBtn.textContent === "View Text") {
         viewAltBtn.textContent = "Hide Text"
+    } else {
+        viewAltBtn.textContent = "View Text"
     }
 })
 
+viewAltBtn.addEventListener("touchstart", function() {
+    announcer.classList.toggle("hidden")
+    if (viewAltBtn.textContent === "View Text") {
+        viewAltBtn.textContent = "Hide Text"
+    } else {
+        viewAltBtn.textContent = "View Text"
+    }
+})
