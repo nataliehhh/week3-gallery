@@ -142,10 +142,6 @@ body {
     transform: scaleY(-1);
 }
 
-.zoom {
-    transform: scale(1.5);
-}
-
 #announcer {
     font-family: Arial, sans-serif;
     color: white;

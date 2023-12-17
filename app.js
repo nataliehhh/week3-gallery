@@ -25,7 +25,7 @@ thumbnails.forEach(function (tn) {
             displayImage.alt = tn.alt;
             displayImage.srcset = tn.srcset;
     }})
-    tn.addEventListener("touchstart", function(event) {
+    tn.addEventListener("touchend", function(event) {
         event.preventDefault()
         displayImage.src = tn.src;
         displayImage.alt = tn.alt;
@@ -40,11 +40,13 @@ rightThumbBtn.addEventListener("click", function() {
     thumbContainer.scrollLeft += 100
 })
 
-leftThumbBtn.addEventListener("touchstart", function() {
+leftThumbBtn.addEventListener("touchend", function(event) {
+    event.preventDefault()
     thumbContainer.scrollLeft -= 100
 })
 
-rightThumbBtn.addEventListener("touchstart", function() {
+rightThumbBtn.addEventListener("touchend", function(event) {
+    event.preventDefault()
     thumbContainer.scrollLeft += 100
 })
 
@@ -73,7 +75,8 @@ hideThumb.addEventListener("click", function() {
     hideThumbImg.classList.toggle("flip")
 })
 
-hideThumb.addEventListener("touchstart", function() {
+hideThumb.addEventListener("touchend", function(event) {
+    event.preventDefault()
     thumbBar.classList.toggle("hidden")
     hideThumbImg.classList.toggle("flip")
 })    
@@ -96,11 +99,11 @@ prevBtn.addEventListener("click", function() {
     displayNextImage(-1)
 })
 
-nextBtn.addEventListener("touchstart", function(event) {
+nextBtn.addEventListener("touchend", function(event) {
     event.preventDefault()
     displayNextImage(1)
 })
-prevBtn.addEventListener("touchstart", function(event) {
+prevBtn.addEventListener("touchend", function(event) {
     event.preventDefault()
     displayNextImage(-1)
 })
@@ -116,16 +119,6 @@ function swipeImage() {
             displayNextImage(-1)
         } else if (swipeDistance > 0) {
             displayNextImage(1)
-        }
-}}
-
-function swipeThumbs() {
-    const swipeDistance = touchEndX - touchStartX
-    if (Math.abs(swipeDistance) >= minSwipeDistance) {
-        if (swipeDistance < 0) {
-            thumbContainer.scrollLeft -= 70
-        } else if (swipeDistance > 0) {
-            thumbContainer.scrollLeft += 70
         }
 }}
 
@@ -181,7 +174,8 @@ viewAltBtn.addEventListener("click", function() {
     }
 })
 
-viewAltBtn.addEventListener("touchstart", function() {
+viewAltBtn.addEventListener("touchend", function(event) {
+    event.preventDefault()
     announcer.classList.toggle("hidden")
     if (viewAltBtn.textContent === "View Text") {
         viewAltBtn.textContent = "Hide Text"
